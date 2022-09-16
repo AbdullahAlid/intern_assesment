@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,22 +15,24 @@ use App\Http\Controllers\AdminController;
 |
 */
 
-Route::get('/', [CarController::class,'index']);
+Route::get('/', [CarController::class,'index'])->middleware('isLoggedIn');
+Route::get('/login', [LoginController::class,'login'])->name('login')->middleware('alreadyLoggedIn');
+Route::get('/registration', [LoginController::class,'registration'])->name('registration')->middleware('alreadyLoggedIn');
+Route::post('/registration', [LoginController::class,'registerUser'])->name('registerUser');
+Route::post('/login', [LoginController::class,'loginUser'])->name('login_user');
+Route::get('/logout', [LoginController::class,'logout'])->name('logout')->middleware('isLoggedIn');
 
-Route::get('/cars', [CarController::class,'index'])->name('car.index');
-Route::get('/car/create', [CarController::class,'create'])->name('car.create');
+Route::get('/cars', [CarController::class,'index'])->name('car.index')->middleware('isLoggedIn');
+Route::get('/car/create', [CarController::class,'create'])->name('car.create')->middleware('adminLoggedIn');
 Route::post('/car/create', [CarController::class,'register'])->name('car.create');
-Route::get('/car/delete/{id}', [CarController::class,'delete'])->name('car.delete');
-Route::get('/car/show/{id}', [CarController::class,'show'])->name('car.show');
-Route::get('/car/delete/{id}', [CarController::class,'delete'])->name('car.delete');
-Route::get('/car/edit/{id}', [CarController::class,'edit'])->name('car.edit');
+Route::get('/car/delete/{id}', [CarController::class,'delete'])->name('car.delete')->middleware('adminLoggedIn');
+Route::get('/car/show/{id}', [CarController::class,'show'])->name('car.show')->middleware('isLoggedIn');
+Route::get('/car/edit/{id}', [CarController::class,'edit'])->name('car.edit')->middleware('adminLoggedIn');
 Route::post('/car/edit/{id}', [CarController::class,'update'])->name('car.edit');
 
 
 
-Route::get('/admins', [AdminController::class,'index'])->name('admin.index');
-Route::get('/admin/create', [AdminController::class,'create'])->name('admin.create');
-Route::post('/admin/create', [AdminController::class,'register'])->name('admin.create');
-Route::get('/admin/edit/{id}', [AdminController::class,'edit'])->name('admin.edit');
-Route::post('/admin/edit/{id}', [AdminController::class,'update'])->name('admin.edit');
-Route::get('/admin/delete/{id}', [AdminController::class,'delete'])->name('admin.delete');
+Route::get('/users', [UserController::class,'index'])->name('user.index')->middleware('adminLoggedIn');
+Route::get('/user/edit/{id}', [UserController::class,'edit'])->name('user.edit')->middleware('adminLoggedIn');
+Route::post('/user/edit/{id}', [UserController::class,'update'])->name('user.edit');
+Route::get('/user/delete/{id}', [UserController::class,'delete'])->name('user.delete')->middleware('adminLoggedIn');
