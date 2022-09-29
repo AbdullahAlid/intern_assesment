@@ -28,9 +28,9 @@
                   </li>
                 </ul>
                   
-                  @if (session('isAdmin')==1)
-                    <a class="nav-link" href="{{route('user.index')}}">Users</a>
-                  @endif
+                  
+                  <a class="nav-link" href="{{route('admin.index')}}">Admins</a>
+                  
                   <a class="nav-link" href="{{route('car.index')}}">Cars</a>
                   <a class="nav-link" href="{{route('logout')}}">Logout</a>
 

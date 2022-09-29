@@ -1,17 +1,17 @@
 @extends('layouts.main')
 @push('title')
-    <title>Edit User</title>    
+    <title>Edit Admin Profile</title>    
 @endpush
 @section('main-section')
     <h1 class="text-center">
-        Edit User
+        Edit Admin profile
     </h1>
     
-    <form action="{{route('user.edit',$user->id)}}" method="post">
+    <form action="{{route('admin.edit',$admin->id)}}" method="post">
         @csrf
         <div class="form-group">
             <label for="">Name</label>
-            <input type="text" name="name" class="form-control" placeholder="" aria-describedby="helpId" value="{{$user->name}}">
+            <input type="text" name="name" class="form-control" placeholder="" aria-describedby="helpId" value="{{$admin->name}}">
             <span class="text-danger">
                 @error('name')
                     {{$message}}
@@ -20,7 +20,7 @@
         </div>
         <div class="form-group">
             <label for="">Phone No.</label>
-            <input type="text" name="phone" class="form-control" placeholder="" aria-describedby="helpId" value="{{$user->phone}}">
+            <input type="text" name="phone" class="form-control" placeholder="" aria-describedby="helpId" value="{{$admin->phone}}">
             <span class="text-danger">
                 @error('phone')
                     {{$message}}
@@ -29,7 +29,7 @@
         </div>
         <div class="form-group">
             <label for="">Address</label>
-            <input type="text" name="address" class="form-control" placeholder="" aria-describedby="helpId" value="{{$user->address}}">
+            <input type="text" name="address" class="form-control" placeholder="" aria-describedby="helpId" value="{{$admin->address}}">
             <span class="text-danger">
                 @error('address')
                     {{$message}}
